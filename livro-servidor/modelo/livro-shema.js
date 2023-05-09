@@ -13,9 +13,13 @@ const LivroSchema = new banco.Schema({
     },
     resumo:{
         type: String
+    },
+    autores:{
+        type: [String]
     }
 })
 
-const Livro = banco.model("Livro", LivroSchema);
+// LivroSchema > collection livros
+const Livro = banco.model("livros", LivroSchema);
 
 module.exports = Livro;
