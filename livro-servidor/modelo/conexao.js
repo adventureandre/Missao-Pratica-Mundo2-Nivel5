@@ -1,9 +1,9 @@
 const banco = require("mongoose");
-const options = {useUnifiedTopology:true,useNewUrlParser:true}
+const options = {useUnifiedTopology:true, useNewUrlParser:true}
 
 banco
     .connect(
-        "mongodb://desenv:Fortaleza@localhost:27017/?authMechanism=DEFAULT",
+        "mongodb://localhost:27017/livraria",
         options
     )
     .then(() => {
