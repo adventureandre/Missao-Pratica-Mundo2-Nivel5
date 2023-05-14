@@ -1,11 +1,11 @@
 class Livros {
-    codigo: number;
+    codigo: string;
     codEditora: number;
     titulo: string;
     resumo: string;
     autores : string[];
 
-    constructor(codigo: number, codEditora: number, titulo: string, resumo: string, autores: string[]) {
+    constructor(codigo: string, titulo: string, codEditora: number, resumo: string, autores: string[]) {
         this.codigo = codigo;
         this.codEditora = codEditora;
         this.titulo = titulo;

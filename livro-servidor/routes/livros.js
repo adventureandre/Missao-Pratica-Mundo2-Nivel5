@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
     try {
         const livro = req.body;
         await controleLivros.incluir(livro);
-        res.json({ mensagem: 'Inclusao efetuada' });
+        res.json({ mensagem: 'Livro Cadastrado!' });
     } catch (error) {
         res.status(500).json({ mensagem: 'Falha ao cadastrar .' });
     }

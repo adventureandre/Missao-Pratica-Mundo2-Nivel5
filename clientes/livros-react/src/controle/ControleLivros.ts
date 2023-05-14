@@ -1,5 +1,4 @@
 import Livro from "../modelo/Livros";
-import {resolveObjectURL} from "buffer";
 
 interface LivroMongo{
     _id: string | null;

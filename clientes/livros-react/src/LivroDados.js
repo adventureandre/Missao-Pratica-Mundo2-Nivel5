@@ -8,12 +8,12 @@ const controlelivros = new ControleLivros()
 const controleEditora = new ControleEditora()
 export default function LivroDados() {
 
-
     //metodo que pega o array de editora e modifica colocando value e text
     const opcoes = controleEditora.getEditoras().map((editora) => ({
         value: editora.codEditora,
         text: editora.nome
     }));
+
 
     const [titulo, setTitulo] = useState('');
     const [resumo, setResumo] = useState('');
@@ -37,9 +37,9 @@ export default function LivroDados() {
             autores: autores.split("\n")
         };
 
-         await controlelivros.incluir(livro).then(()=>{
-             navigate("/");
-         })
+        await controlelivros.incluir(livro).then(()=>{
+            navigate("/");
+        })
     };
 
 
@@ -61,12 +61,12 @@ export default function LivroDados() {
 
                     <div className="form-group mb-3">
                         <label htmlFor="resumo">Resumo</label>
-                       <textarea
-                           className="form-control"
-                           id="resumo"
-                           name='resumo'
-                           onChange={(evento) => setResumo(evento.target.value)}
-                       ></textarea>
+                        <textarea
+                            className="form-control"
+                            id="resumo"
+                            name='resumo'
+                            onChange={(evento) => setResumo(evento.target.value)}
+                        ></textarea>
                     </div>
 
                     <div className="form-group mb-3">
