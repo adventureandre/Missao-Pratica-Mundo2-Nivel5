@@ -31,27 +31,29 @@ export default function LivroLista() {
     const [livros, setLivros] = useState([]);
     const [carregado, setCarregando] = useState(false);
 
-    useEffect(() => {
-        document.title = "Lista de Livros";
-        //Aki pode coloca a api futura
-        // e chama ela asincrona
-        setLivros(controleLivros.obterLivros());
 
-        //Simulei um deley aki para ver o efeito do carregando
-        setTimeout(() => {
-            setCarregando(true)
-        }, 200)
+    useEffect( () => {
+        document.title = "Lista de Livros";
+        controleLivros.obterLivros().then((livros)=>{
+            setLivros(livros);
+            setCarregando(true);
+        })
+            .catch((error) => {
+                console.error("Erro ao Carregar os livros:", error);
+                setCarregando(true);
+            });
 
     }, []);
 
+
     const excluirlivro = (codigo) => {
         setCarregando(false);
-        setLivros(controleLivros.excluir(codigo));
-        //Simulei um deley aki para ver o efeito do carregando
-        setTimeout(() => {
-            setCarregando(true)
-        }, 200)
-
+        controleLivros.excluir(codigo).then(()=>{
+            controleLivros.obterLivros().then((livros)=>{
+                setLivros(livros)
+            })
+        })
+        setCarregando(true);
     };
 
     return (
@@ -75,7 +77,7 @@ export default function LivroLista() {
                     </tr>
                     </thead>
                     <tbody>
-                    {livros.map((livro) => (<LinhaLivro key={livro.codigo} livro={livro} excluir={excluirlivro}/>))}
+                    {livros.map((livro,index) => (<LinhaLivro key={index} livro={livro} excluir={excluirlivro}/>))}
                     </tbody>
                 </table>
             </main>

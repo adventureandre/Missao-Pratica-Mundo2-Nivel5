@@ -27,17 +27,19 @@ export default function LivroDados() {
         setCodEditora(numerointeiro)
     }
 
-    const incluir = (evento) => {
+    const incluir = async (evento) => {
         evento.preventDefault();
         const livro = {
-            codLivro: 0,
+            _id: null,
             titulo: titulo,
             resumo: resumo,
             codEditora: codEditora,
             autores: autores.split("\n")
         };
-        controlelivros.incluir(livro);
-        navigate("/");
+
+         await controlelivros.incluir(livro).then(()=>{
+             navigate("/");
+         })
     };
 
 

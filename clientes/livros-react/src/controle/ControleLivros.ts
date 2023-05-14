@@ -1,27 +1,50 @@
-import Livros from "../modelo/Livros";
+import Livro from "../modelo/Livros";
+import {resolveObjectURL} from "buffer";
 
-let livros: Livros[] = [
-    (new  Livros(1,1,"TypeScript",'Gerando o JavaScript do Futuro',['Marcelo Soares da Costa','andre luiz'])),
-    (new  Livros(2,2,"O Senhor dos Anéis","Uma jornada épica através da Terra-média",["J.R.R. Tolkien"])),
-    (new Livros(4, 3, "1984", "Uma distopia sombria sobre um futuro opressivo", ["George Orwell"])),
-]
+interface LivroMongo{
+    _id: string | null;
+    titulo: string;
+    codEditora: number;
+    resumo: string;
+    autores: string[];
+}
+
+const baseURL = 'http://localhost:3030/livros'
+
 
 class ControleLivro {
 
-    obterLivros(){
-        return livros;
+    obterLivros = async ()=>{
+        const resposta = await fetch(baseURL,{
+            method:"GET"
+        });
+        const respostaJson =  await resposta.json()
+        return respostaJson.map((livro:any)=>{
+            return new Livro(livro._id,livro.titulo, livro.codEditora, livro.resumo, livro.autores)
+        });
     }
 
-    incluir(livro: Livros):void {
-        const codigoNovo = livros.length > 0 ?
-            Math.max(...livros.map(l => l.codigo)) + 1 :
-            1;
-        livro.codigo = codigoNovo;
-        livros.push(livro);
+    incluir = async (livro: Livro)=>{
+        const resposta = await fetch(baseURL,{
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(livro)
+        })
+        const respostaJson =  await resposta.json();
+
+        return respostaJson.ok;
     }
-    excluir(codigo: number) {
-        livros = livros.filter((livro) => livro.codigo !== codigo);
-        return livros;
+    excluir = async (codigo: string)=> {
+
+        const resposta = await fetch(`${baseURL}/${codigo}`,{
+            method:"DELETE"
+        })
+
+        const resposaJson =  await resposta.json()
+
+        return resposaJson.ok;
     }
 
 
