@@ -4,7 +4,7 @@ import React from "react";
 
 interface LinhaLivroProps {
     livro:Livros
-    excluir(codigo: number):void
+    excluir(codigo: string):void
 
 }
 

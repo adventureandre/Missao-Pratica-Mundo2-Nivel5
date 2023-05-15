@@ -3,10 +3,9 @@ import React, {useState} from "react";
 import ControleEditora from "@/classes/controle/ControleEditora";
 import {router} from "next/client";
 import {Menu} from "@/components/Menu";
+import controleLivros from "@/classes/controle/ControleLivros";
 
 const controleEditora = new ControleEditora()
-const baseUrl = "http://localhost:3000/api/livros"
-const baseUrlEditora = "http://localhost:3000/api/editoras"
 
 
 const LivroDados: NextPage = () => {
@@ -23,6 +22,7 @@ const LivroDados: NextPage = () => {
     const [codEditora, setCodEditora] = useState(opcoes[0].value);
 
 
+    //redirecionar
     const navigate = (pagina: string) => router.push(pagina);
 
     const tratarCombo = (evento: any) => {
@@ -33,7 +33,7 @@ const LivroDados: NextPage = () => {
     const incluir = (evento: any) => {
         evento.preventDefault();
         const livro = {
-            codigo: 0,
+            _id: null,
             codEditora: codEditora,
             titulo: titulo,
             resumo: resumo,
@@ -41,17 +41,13 @@ const LivroDados: NextPage = () => {
         };
 
         incluirLivro(livro);
-        navigate("/LivroLista")
-
-
     };
 
     const incluirLivro = async (livro: any) => {
-        const resposta = await fetch(baseUrl, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(livro)
-        }).then(respota => respota.json())
+        controleLivros.incluir(livro)
+            .then(()=>{
+                navigate("/LivroLista")
+            })
     };
 
 

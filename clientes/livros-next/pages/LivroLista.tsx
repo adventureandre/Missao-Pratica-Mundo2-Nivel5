@@ -5,8 +5,11 @@ import Livros from "@/classes/modelo/Livros";
 import {Menu} from "@/components/Menu";
 import {LinhaLivro} from "@/components/LinhaLivro";
 import Head from "next/head";
+import controleLivros from "@/classes/controle/ControleLivros";
+import {number} from "prop-types";
 
-const baseURL = "http://localhost:3000/api/livros"
+
+const baseURL = "http://localhost:3030/livros"
 
 const LivroLista: NextPage = () => {
     const [livros, setLivros] = useState<Array<Livros>>([])
@@ -15,26 +18,21 @@ const LivroLista: NextPage = () => {
 
     const obterLivros = async () => {
         return await fetch(baseURL)
-               .then((resposta) => resposta.json())
-               .then((resposta) => resposta);
+            .then((resposta) => resposta.json())
+            .then((resposta) => resposta);
     }
-    const excluirLivro = async (codigo: number) => {
+    const excluirLivro = async (codigo: string) => {
         setCarregado(false);
-        const returno = await fetch(`${baseURL}/${codigo}`, {method: 'GET'}).then(resposta => resposta.json())
-        if (returno) {
-            setLivros(returno)
-            setCarregado(true);
-        }
+        await controleLivros.excluir(codigo)
+        setLivros(await controleLivros.obterLivros());
+        setCarregado(true);
+
     }
 
     useEffect(() => {
         const carregaLivros = async () => {
-            setLivros(await obterLivros());
-
-            setTimeout(() => {
-                setCarregado(true)
-            }, 200);
-
+            setLivros(await controleLivros.obterLivros());
+            setCarregado(true)
             return livros;
         };
 
@@ -67,7 +65,7 @@ const LivroLista: NextPage = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {livros.map((livro) => (<LinhaLivro key={livro.codigo} livro={livro} excluir={excluirLivro}/>))}
+                    {livros.map((livro, index) => (<LinhaLivro key={index} livro={livro} excluir={excluirLivro}/>))}
                     </tbody>
                 </table>
             </main>
