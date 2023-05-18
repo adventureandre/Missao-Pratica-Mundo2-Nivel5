@@ -1,7 +1,9 @@
 export class Livro {
-  codigo:number = 0;
+
+  codigo:string ='';
   codEditora:number = 0;
   titulo:string = '';
   resumo:string = '';
   autores:Array<string> = [];
+
 }

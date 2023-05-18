@@ -27,9 +27,10 @@ export class LivroDadosComponent implements OnInit{
     // console.log(this.editoras)
   }
 
-  incluir = () => {
+  incluir = async () => {
     this.livro.autores = this.autoresForm.split('\n');
-    this.servLivros.incluir(this.livro);
+
+    await this.servLivros.incluir(this.livro);
     this.router.navigateByUrl('/lista');
   };
 }

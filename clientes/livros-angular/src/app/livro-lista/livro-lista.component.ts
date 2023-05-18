@@ -21,17 +21,17 @@ export class LivroListaComponent implements OnInit {
     this.servLivros = servLivros;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.editoras = this.servEditora.getEditoras();
-    this.livros = this.servLivros.obterLivros();
+    this.livros = await this.servLivros.obterLivros();
   }
 
-  excluir = (codigo: number) => {
-    this.servLivros.excluir(codigo);
-    this.livros = this.servLivros.obterLivros();
+  excluir = async (codigo: string) => {
+   await this.servLivros.excluir(codigo);
+    this.livros = await this.servLivros.obterLivros();
   }
 
-  obterNome = (codEditora: number) => {
-    return this.servEditora.getNomeEditora(codEditora)
+  obterNome =  (codEditora: number) => {
+    return this.servEditora.getNomeEditora(codEditora);
   }
 }
