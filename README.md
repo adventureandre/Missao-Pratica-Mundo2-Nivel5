@@ -9,9 +9,8 @@
 
 ## Credits
 
-- [Equipe](https://github.com/adventureandre) (Developer)
-- [equipe](https://github.com/) (Team)
-- [All Contributors](https://github.com/) (This Rock)
+- [Desenvolvedor](https://github.com/adventureandre) (Developer)
+- [Ensino](https://estacio.br/) (Estacio)
 
 ## License
 
